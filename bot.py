@@ -22,7 +22,8 @@ db = DbHandler(HOST, USER, PASSWORD, DATABASE)
 async def on_ready():
     print(f"{bot.user.name} has connected to Discord!")
 
-@bot.command(name="add")
+@bot.command(name="add", help="Προσθέτω μάθημα με τον εξής τρόπο: !add assignment_name class_name date." +
+                    " Το date να είναι της μόρφης 2021-03-25:21:00:00.")
 async def add_command(ctx, assignment_name, class_name, turn_in_date):
     author = ctx.message.author
 
@@ -38,7 +39,7 @@ async def add_command(ctx, assignment_name, class_name, turn_in_date):
 
     await ctx.send(f"Προσθέσα το μάθημα σου φίλτατε/η, {author.mention}.")
 
-@bot.command(name="remind")
+@bot.command(name="remind", help="Σε ενημερώνω πόσες μέρες σου εμείνε για την κάθε εργασία σου.")
 async def remind_command(ctx):
     author = ctx.message.author
 
@@ -51,7 +52,7 @@ async def remind_command(ctx):
 
     await ctx.send(msg)
 
-@bot.command(name="done")
+@bot.command(name="done", help="Όταν τελείωσεις την εργασία, καλέσε με με τον εξής τρόπο: !done assignment_name class_name")
 async def done_command(ctx, assignment_name, class_name):
     author = ctx.message.author
 

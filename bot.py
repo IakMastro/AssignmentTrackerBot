@@ -1,10 +1,12 @@
-from db_handler import DbHandler
 import os
+
+from datetime import datetime
 from discord import message
 from discord.ext import commands
 from discord.ext.commands.errors import MissingRequiredArgument
-
 from dotenv import load_dotenv
+
+from db_handler import DbHandler
 
 load_dotenv()
 TOKEN = os.getenv('DISCORD_TOKEN')
@@ -35,5 +37,18 @@ async def add_command(ctx, assignment_name, class_name, turn_in_date):
     db.add_assignment(query)
 
     await ctx.send(f"Προσθέσα το μάθημα σου φίλτατε/η, {author.mention}.")
+
+@bot.command(name="remind")
+async def remind_command(ctx):
+    author = ctx.message.author
+
+    assignments = db.remind_assignments(author.id)
+
+    msg = ctx.message.author.mention
+    msg += ", αυτές είναι οι εργασίες σου:"
+    for assignment in assignments:
+        msg += f"\n{assignment[0]} για το μάθημα {assignment[1]} για {assignment[2] - datetime.today()} ώρες."
+
+    await ctx.send(msg)
 
 bot.run(TOKEN)

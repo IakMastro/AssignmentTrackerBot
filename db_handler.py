@@ -16,3 +16,10 @@ class DbHandler:
             f"('{query['assignment_name']}', '{query['class_name']}', '{query['turn_in_date']}', '{query['author']}', '{query['guild']}');"
         )
         self.__assignment_db.commit()
+
+    def remind_assignments(self, author):
+        self.__cursor.execute("SELECT assignment_name, class_name, turn_in_date " +
+            f"FROM assignment WHERE author = '{author}';"
+        )
+        assignments = self.__cursor.fetchall()
+        return assignments

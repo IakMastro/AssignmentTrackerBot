@@ -6,7 +6,7 @@ CREATE TABLE assignment (
     assignment_id INT NOT NULL AUTO_INCREMENT,
     assignment_name VARCHAR(100) NOT NULL,
     class_name VARCHAR(100) NOT NULL,
-    turn_in_date DATE NOT NULL,
+    turn_in_date DATETIME NOT NULL,
     author VARCHAR(100),
     guild VARCHAR(100),
     PRIMARY KEY(assignment_id)

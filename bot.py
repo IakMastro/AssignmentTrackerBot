@@ -44,11 +44,25 @@ async def remind_command(ctx):
 
     assignments = db.remind_assignments(author.id)
 
-    msg = ctx.message.author.mention
+    msg = author.mention
     msg += ", αυτές είναι οι εργασίες σου:"
     for assignment in assignments:
         msg += f"\n{assignment[0]} για το μάθημα {assignment[1]} για {assignment[2] - datetime.today()} ώρες."
 
     await ctx.send(msg)
+
+@bot.command(name="done")
+async def done_command(ctx, assignment_name, class_name):
+    author = ctx.message.author
+
+    query = {
+        "assignment_name": assignment_name,
+        "class_name": class_name,
+        "author": author.id,
+    }
+
+    db.done_assignment(query)
+
+    await ctx.send("Γρήγορος/η γρήγορος/η " + author.mention)
 
 bot.run(TOKEN)

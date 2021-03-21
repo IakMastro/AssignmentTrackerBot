@@ -23,3 +23,8 @@ class DbHandler:
         )
         assignments = self.__cursor.fetchall()
         return assignments
+
+    def done_assignment(self, query):
+        self.__cursor.execute(f"DELETE FROM assignment WHERE assignment_name = '{query['assignment_name']}' " +
+            f"AND class_name = '{query['class_name']}' AND author = '{query['author']}';")
+        self.__assignment_db.commit()

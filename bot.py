@@ -22,10 +22,10 @@ db = DbHandler(HOST, USER, PASSWORD, DATABASE)
 async def on_ready():
     print(f"{bot.user.name} has connected to Discord!")
 
-@bot.command(name="add", help="Προσθέτω μάθημα με τον εξής τρόπο: !add assignment_name class_name date." +
-                    " Το date να είναι της μόρφης 2021-03-25:21:00:00.")
-async def add_command(ctx, assignment_name, class_name, turn_in_date):
+@bot.command(name="add", help="Προσθέτω εργασία. Το date να είναι της μόρφης 2021-03-25, ενώ η ώρα 21:00:00.")
+async def add_command(ctx, assignment_name, class_name, turn_in_date, turn_in_time):
     author = ctx.message.author
+    turn_in_date += ":" + turn_in_time
 
     query = {
         "assignment_name": assignment_name,
@@ -37,7 +37,7 @@ async def add_command(ctx, assignment_name, class_name, turn_in_date):
 
     db.add_assignment(query)
 
-    await ctx.send(f"Προσθέσα το μάθημα σου φίλτατε/η, {author.mention}.")
+    await ctx.send(f"Προσθέσα την εργασία σου φίλτατε/η, {author.mention}.")
 
 @bot.command(name="remind", help="Σε ενημερώνω πόσες μέρες σου εμείνε για την κάθε εργασία σου.")
 async def remind_command(ctx):
@@ -52,7 +52,7 @@ async def remind_command(ctx):
 
     await ctx.send(msg)
 
-@bot.command(name="done", help="Όταν τελείωσεις την εργασία, καλέσε με με τον εξής τρόπο: !done assignment_name class_name")
+@bot.command(name="done", help="Όταν τελείωσεις την εργασία, καλεσέ με.")
 async def done_command(ctx, assignment_name, class_name):
     author = ctx.message.author
 
@@ -64,6 +64,6 @@ async def done_command(ctx, assignment_name, class_name):
 
     db.done_assignment(query)
 
-    await ctx.send("Γρήγορος/η γρήγορος/η " + author.mention)
+    await ctx.send("Διέγραψα την εργασία σου, " + author.mention)
 
 bot.run(TOKEN)

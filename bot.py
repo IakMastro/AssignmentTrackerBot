@@ -37,7 +37,7 @@ async def add_command(ctx, assignment_name, class_name, turn_in_date, turn_in_ti
 
     db.add_assignment(query)
 
-    await ctx.send(f"Προσθέσα την εργασία σου φίλτατε/η, {author.mention}.")
+    await ctx.send(f"Πρόσθεσα την εργασία σου φίλτατε/η, {author.mention}.")
 
 @bot.command(name="remind", help="Σε ενημερώνω πόσες μέρες σου εμείνε για την κάθε εργασία σου.")
 async def remind_command(ctx):
